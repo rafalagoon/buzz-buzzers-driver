@@ -8,4 +8,5 @@ A python driver for the famous Sony Wireless Buzz Buzzers. Maps the buzzers butt
 
 ## Usage
 * Connect up to two USB receivers
-* 
+* execute sudo python 'buzzBuzzers_0.3.py' in a console
+* try your buzzers in notepad
