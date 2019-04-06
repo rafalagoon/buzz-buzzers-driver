@@ -76,7 +76,7 @@ class WirelessReceiver(object):
    #
 #
 
-# Representation of a Buzz! wireless Buzzer. 
+# Representation of a Buzz! wireless Buzzer.
 # Representation of a single Xbox 360 wireless contoller. Each of the 4
 # controllers is tracked and handled separately by the driver code. In order
 # to set the LED ring on the controller properly, each controller needs to
@@ -96,12 +96,12 @@ class Controller(object):
 		ctrlBtnArray = [-1] * 4
 		try:
 			pkt = self.dev_h.interruptRead(self.inep, 8, 1000)
-			
+
 			if (pkt[2] != 0 or pkt[3] != 0 or pkt[4] != 0xF0):
 				#First buzzer decompilation
 				if bool(pkt[2] & 0b00000001):
 					ctrlBtnArray[0] = 0
-				if bool(pkt[2] & 0b00010000):			
+				if bool(pkt[2] & 0b00010000):
 					ctrlBtnArray[0] = 4
 				if bool(pkt[2] & 0b00001000):
 					ctrlBtnArray[0] = 3
@@ -119,7 +119,7 @@ class Controller(object):
 					ctrlBtnArray[1] = 8
 				if bool(pkt[2] & 0b10000000):
 					ctrlBtnArray[1] = 7
-				if bool(pkt[2] & 0b01000000):			
+				if bool(pkt[2] & 0b01000000):
 					ctrlBtnArray[1] = 6
 
 				#Third buzzer decompilation
@@ -131,7 +131,7 @@ class Controller(object):
 					ctrlBtnArray[2] = 13
 				if bool(pkt[3] & 0b00010000):
 					ctrlBtnArray[2] = 12
-				if bool(pkt[3] & 0b00001000):			
+				if bool(pkt[3] & 0b00001000):
 					ctrlBtnArray[2] = 11
 
 				#Fourth buzzer decompilation
@@ -145,12 +145,12 @@ class Controller(object):
 					ctrlBtnArray[3] = 17
 				if bool(pkt[4] & 0b00000001):
 					ctrlBtnArray[3] = 16
-			
+
 				#ui.write_event(InputEvent(1, 200, ecodes.EV_KEY, deviceindex[index], 1))
 
 				#self.sleep(200)
 				#ui.write(ecodes.EV_KEY, deviceindex[index], 0)
-				
+
 
 		except Exception, e:
 			#interruptRead timedout
@@ -193,7 +193,7 @@ class DriverThread(Thread):
 				#if yes, send the information to the corresponding keyboard thread
 				if ctrlBtnArray[index] != -1:
 					self.threads[index].simulateKey(deviceindex[ctrlBtnArray[index]+ self.offset])
-		
+
 		self.threads[0].signal()
 		self.threads[1].signal()
 		self.threads[2].signal()
@@ -228,13 +228,13 @@ class KeyboardSimuThread(Thread):
 				time.sleep (0.3)							#Hold it down for 300ms so that Blender is able to read it
 				self.ui.write(ecodes.EV_KEY, self.key, 0)	#Relase
 				self.ui.syn()
-				
+
 				self.waitingOnKey = True					#Now we can send a new key
 															#If another key of this buzzer had been pressed it will not be taken in concideration
 															# before waitingOnKey is set to True. So 300ms after last key was pressed
 			time.sleep (0.1)
-		
-		self.ui.close()		
+
+		self.ui.close()
 		print "KeyboardSimuThread terminated!"
 
 	def simulateKey(self, key):
@@ -273,57 +273,57 @@ if __name__ == '__main__':
 	if 1:
 		deviceindex = [
 			#First wirelessReceiver
-			ecodes.KEY_1,
-			ecodes.KEY_5,
-			ecodes.KEY_4,
-			ecodes.KEY_3,
-			ecodes.KEY_2,
-			
+			ecodes.KEY_A,
+			ecodes.KEY_B,
+			ecodes.KEY_C,
+			ecodes.KEY_D,
+			ecodes.KEY_E,
 
-			ecodes.KEY_6, #Inverted for strage reason
-			ecodes.KEY_0,
-			ecodes.KEY_9,
-			ecodes.KEY_8,
-			ecodes.KEY_7,
 
-			ecodes.KEY_KP1,
-			ecodes.KEY_KP5,
-			ecodes.KEY_KP4,
-			ecodes.KEY_KP3,
-			ecodes.KEY_KP2,
+			ecodes.KEY_F, #Inverted for strage reason
+			ecodes.KEY_G,
+			ecodes.KEY_H,
+			ecodes.KEY_I,
+			ecodes.KEY_J,
 
-			ecodes.KEY_KP6, #Inverted for strage reason
-			ecodes.KEY_KP0,
-			ecodes.KEY_KP9,
-			ecodes.KEY_KP8,
-			ecodes.KEY_KP7,
+			ecodes.KEY_K,
+			ecodes.KEY_L,
+			ecodes.KEY_M,
+			ecodes.KEY_N,
+			ecodes.KEY_O,
+
+			ecodes.KEY_P, #Inverted for strage reason
+			ecodes.KEY_Q,
+			ecodes.KEY_R,
+			ecodes.KEY_S,
+			ecodes.KEY_T,
 
 			#second wirelessReceiver
-			ecodes.KEY_F1,
-			ecodes.KEY_F5,
-			ecodes.KEY_F4,
-			ecodes.KEY_F3,
-			ecodes.KEY_F2,
+			ecodes.KEY_U,
+			ecodes.KEY_V,
+			ecodes.KEY_W,
+			ecodes.KEY_X,
+			ecodes.KEY_Y,
 
-			ecodes.KEY_F6,
-			ecodes.KEY_F10,
-			ecodes.KEY_F9,
-			ecodes.KEY_F8,
-			ecodes.KEY_F7,
+			ecodes.KEY_0,
+			ecodes.KEY_1,
+			ecodes.KEY_2,
+			ecodes.KEY_3,
+			ecodes.KEY_4,
 
-			ecodes.KEY_F11,
-			ecodes.KEY_PAGEDOWN,
-			ecodes.KEY_DELETE,
-			ecodes.KEY_INSERT,
-			ecodes.KEY_F12,
+			ecodes.KEY_5,
+			ecodes.KEY_6,
+			ecodes.KEY_7,
+			ecodes.KEY_8,
+			ecodes.KEY_9,
 
-			ecodes.KEY_LEFT,
-			ecodes.KEY_KPSLASH,
-			ecodes.KEY_UP,
-			ecodes.KEY_RIGHT,
-			ecodes.KEY_DOWN
+			ecodes.KEY_COMMA,
+			ecodes.KEY_DOT,
+			ecodes.KEY_SLASH,
+			ecodes.KEY_BACKSLASH,
+			ecodes.KEY_MINUS
 			]
-	
+
 	wr = []
 
 	usb_device = None
@@ -371,9 +371,7 @@ if __name__ == '__main__':
 
 	for wirelessReceiver in wr:
 		wirelessReceiver.release_interfaces()
-	# 
+	#
 	print 'main driver exiting'
 	#
 #
-
-
