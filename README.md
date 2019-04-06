@@ -8,5 +8,8 @@ A python driver for the famous Sony Wireless Buzz Buzzers. Maps the buzzers butt
 
 ## Usage
 * Connect up to two USB receivers
-* execute sudo python 'buzzBuzzers_0.3.py' in a console
+* execute sudo python 'buzzBuzzers.py' in a console
 * try your buzzers in notepad
+
+## Purpose
+This purpose of this project is to make the Buzzers work with the desktop version of QuizIt.
