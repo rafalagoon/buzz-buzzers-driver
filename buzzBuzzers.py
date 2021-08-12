@@ -36,7 +36,7 @@ class WirelessReceiver(object):
 		self.usb_device = usb_dev
 		if self.usb_device is None:
 			raise Exception('wireless receiver not found on USB bus')
-		print self.usb_device
+		print (self.usb_device)
 		self.claim_interfaces()
 
 	#def find_receiver(self):
@@ -60,7 +60,7 @@ class WirelessReceiver(object):
 		try:
 			dev_h.detachKernelDriver(0) #FC
 			dev_h.detachKernelDriver(1) #FC
-		except Exception, e:
+		except Exception as e:
 			pass
 		dev_h.setConfiguration(config)
 		dev_h.claimInterface(intf[0])
@@ -152,7 +152,7 @@ class Controller(object):
 				#ui.write(ecodes.EV_KEY, deviceindex[index], 0)
 
 
-		except Exception, e:
+		except Exception as e:
 			#interruptRead timedout
 			pass
 		return ctrlBtnArray
@@ -176,7 +176,7 @@ class DriverThread(Thread):
 	def run(self):
 		index2 = 0
 		ctrlBtnArray = [-1] * 4
-		print "Driver Thread Started!"
+		print ("Driver Thread Started!")
 
 		#Start all sub threads that will manage keyboard presses
 		self.threads[0].start()
@@ -199,11 +199,11 @@ class DriverThread(Thread):
 		self.threads[2].signal()
 		self.threads[3].signal()
 
-		print 'Driver Thread terminated!'
+		print ('Driver Thread terminated!')
 	#
 	# Each thread runs until explicitly signaled to stop
 	def signal(self):
-		print "Driver Thread will terminate!"
+		print ("Driver Thread will terminate!")
 		self.keep_running = False
 	#
 #
@@ -218,7 +218,7 @@ class KeyboardSimuThread(Thread):
 		self.key = ecodes.KEY_Q
 	#
 	def run(self):
-		print "KeyboardSimuThread Started!"
+		print ("KeyboardSimuThread Started!")
 		while self.keep_running:
 			if self.waitingOnKey == False:
 				#print "Buzzer " + str(self.thNo)
@@ -235,7 +235,7 @@ class KeyboardSimuThread(Thread):
 			time.sleep (0.1)
 
 		self.ui.close()
-		print "KeyboardSimuThread terminated!"
+		print ("KeyboardSimuThread terminated!")
 
 	def simulateKey(self, key):
 		#If the thread is waiting for a key we send it, otherwise we ignore it because the thread is already managing one key
@@ -245,7 +245,7 @@ class KeyboardSimuThread(Thread):
 
 	# Each thread runs until explicitly signaled to stop
 	def signal(self):
-		print "KeyboardSimuThread will terminate!"
+		print ("KeyboardSimuThread will terminate!")
 		self.keep_running = False
 	#
 
@@ -261,7 +261,7 @@ class SignalHandler(object):
 		self.threads.append(th)
 	#
 	def signal(self, signum, frame):
-		print "Ctrl+C recieved, I'll tell all threads to terminate!"
+		print ("Ctrl+C recieved, I'll tell all threads to terminate!")
 		for th in self.threads:
 			th.signal()
 	#
@@ -349,7 +349,7 @@ if __name__ == '__main__':
 
 	# Set up signal handler
 	signal.signal(signal.SIGINT, sh.signal)
-	print 'Main driver is running '
+	print ('Main driver is running ')
 
 	# Spin (busy-wait) so Ctrl+C works properly. Do NOT join on threads in
 	# the main loop in Python if you want to be able to catch signals... the
@@ -372,6 +372,6 @@ if __name__ == '__main__':
 	for wirelessReceiver in wr:
 		wirelessReceiver.release_interfaces()
 	#
-	print 'main driver exiting'
+	print ('main driver exiting')
 	#
 #
